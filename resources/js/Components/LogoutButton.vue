@@ -12,9 +12,13 @@ export default {
         const router = useRouter()
 
         const logout = () => {
-            Cookies.remove('x-access-token')
-            Cookies.remove('auth-user')
-            return router.push({name: 'login'})
+            axios.post('/api/logout')
+                .then(() => {
+                    Cookies.remove('x-access-token')
+                    Cookies.remove('auth-user')
+                    return router.push({name: 'login'})
+                })
+                .catch(e => console.log(e))
         }
 
         return {

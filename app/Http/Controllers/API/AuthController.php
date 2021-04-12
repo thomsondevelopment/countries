@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Actions\CreateUserAction;
-use App\Actions\LoginUserAction;
 use Illuminate\Http\Request;
+use App\Actions\LoginUserAction;
+use App\Actions\CreateUserAction;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -18,5 +19,11 @@ class AuthController extends Controller
 
         return LoginUserAction::run($request);
 
+    }
+
+    public function logout(Request $request) {
+            $request->user()->tokens()->delete();
+
+            return response()->json(null, 200);
     }
 }
